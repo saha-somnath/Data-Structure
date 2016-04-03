@@ -66,11 +66,11 @@ int main(int argc, const char * argv[]) {
 
 
 /*************************************************************************
- *Function Name :Graph::createWeightedConnectedGraph(int noOfVertices)
- *Input Argument: None
- *Output        : None
- *Description   : Create a Connected Weighted Graph suing Adjacency List
- *************************************************************************/
+ *Function Name :Graph::createWeightedConnectedGraph(int noOfVertices)   *
+ *Input Argument: None                                                   *
+ *Output        : None                                                   *
+ *Description   : Create a Connected Weighted Graph suing Adjacency List *
+ ************************************************************************/
 
 void Graph::createWeightedConnectedGraph()
 {
@@ -120,11 +120,11 @@ void Graph::createWeightedConnectedGraph()
 }
 
 /**********************************************************************************
- *Function Name: void Graph::displayGraph()
- *Input Arg    : None
- *Return       : None
- *Descripttion : Dispaly Graph
- **********************************************************************************/
+ *Function Name: void Graph::displayGraph()                                       *
+ *Input Arg    : None                                                             *
+ *Return       : None                                                             *
+ *Descripttion : Dispaly Graph                                                    *
+ *********************************************************************************/
 void Graph::displayGraph()
 {
     map<char, AdjacentNode *>::iterator itAdjacencyList;
@@ -270,7 +270,7 @@ char getMinCostAdjacentNode()
  *Input Arg    : None                                                             *
  *Return       : None                                                             *
  *Descripttion : Dispaly shortest path and cost for each node from source node    *
- **********************************************************************************/
+ *********************************************************************************/
 void displayShortestPathAndCost(char sourceVertex)
 {
     // Iterate distance cost list
@@ -288,11 +288,11 @@ void displayShortestPathAndCost(char sourceVertex)
 }
 
 /**********************************************************************************
- *Function Name: void destroyDistanceCost()
- *Input Arg    : None
- *Return       : None
- *Descripttion : Destroy distance cost array
- **********************************************************************************/
+ *Function Name: void destroyDistanceCost()                                       *
+ *Input Arg    : None                                                             *
+ *Return       : None                                                             *
+ *Descripttion : Destroy distance cost array                                      *
+ *********************************************************************************/
 void destroyDistanceCost()
 {
     // Free dynamically allocated memory
