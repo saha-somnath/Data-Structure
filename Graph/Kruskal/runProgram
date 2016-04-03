@@ -1,0 +1,13 @@
+#/bin/bash
+
+# take Start Time
+start=$(date +%N)
+#echo "START:$start"
+./a.out < input.txt
+end=$(date +%N)
+#echo "END:$end"
+ExecutionTime=$(( $end - $start ))
+ExecutionTime=$(($ExecutionTime / 1000000));
+echo
+echo "Execution Time:$ExecutionTime milliseconds"
+echo
