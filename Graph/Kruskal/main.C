@@ -31,10 +31,10 @@ int main(int argc, const char * argv[]) {
 }
 
 /**********************************************************************************
- *Function Name: dijkstra(char startVertex, char destinationNode )                *
- *Input Arg    : char startVertex , char destinationNode                          *
+ *Function Name: Graph::Kruskal(char startVertex)                                 *
+ *Input Arg    : char startVertex                                                 *
  *Return       : None                                                             *
- *Descripttion : Apply dijkstra algorithm to find out shortest path               *
+ *Descripttion : Apply Kruskal's MST algorithm to find MST from a Graph           *
  *********************************************************************************/
 void Graph::Kruskal(char startVertex)
 {
