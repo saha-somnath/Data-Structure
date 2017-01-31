@@ -6,6 +6,12 @@
 //  Copyright © 2015 Somnath Saha. All rights reserved.
 //
 
+/*
+Program: BFS 
+- Graph representation using Adjacency List
+- Time Complexity: O( V^2 ) where V is number of vertices
+*/
+
 #include <iostream>
 #include <stack>
 
