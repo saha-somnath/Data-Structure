@@ -92,6 +92,8 @@ void DFS( Graph & G, int startVertex)
     std::stack<int> dfsStack;
     // Enqueue start element in te queue
     dfsStack.push(startVertex);
+    
+    explored[startVertex] = true;
     // Check the adjacent of start vertex
     while(! dfsStack.empty())
     {
