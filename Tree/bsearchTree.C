@@ -24,8 +24,8 @@ public:
     ~Tree()
     {
         // free elements if root is not null
-        cout<<" Destructor"<<endl;
-        if ( root )
+        cout<<"Destructor"<<endl;
+        if ( root != NULL )
         {
            cout<<"Destroy Tree"<<endl;
            destroy( root); 
@@ -36,10 +36,10 @@ public:
     void buildTree( Node*  rootPtr, int item);
     
     // Tree traversal
-    friend void  treeTraversal( Tree);
-    void preorderTraversal( Node* rootPtr );
-    void inorderTraversal(Node* rootPtr);
-    void postorderTraversal(Node* rootPtr );
+    friend void  treeTraversal(const Tree&);
+    void preorderTraversal( Node* rootPtr ) const;
+    void inorderTraversal(Node* rootPtr) const;
+    void postorderTraversal(Node* rootPtr ) const;
     
     // Destroy tree
     void destroy(Node* root);
@@ -98,7 +98,7 @@ void Tree::buildTree(Node* rootPtr, int itemValue)
 
 // Tree Traversal
 
-void treeTraversal( Tree myTree)
+void treeTraversal(const Tree& myTree)
 {
     cout<<"preorder Traversal"<<endl;
     myTree.preorderTraversal(myTree.root);
@@ -119,8 +119,6 @@ void Tree::destroy(Node* root)
     }
     // Delete left sub tree
     destroy(root->leftPtr);
-    //cout<<"Delete NodeL:"<<root->info;
-    //delete root;
     // Delete right subtree
     destroy(root->rightPtr);
     cout<<"Delete Node:"<<root->info<<endl;
@@ -128,8 +126,8 @@ void Tree::destroy(Node* root)
     root = NULL;
     
 }
-
-void Tree::preorderTraversal(Node* rootPtr)
+// Pre-order traversal
+void Tree::preorderTraversal(Node* rootPtr) const 
 {
     // Traverse the tree
     
@@ -141,8 +139,8 @@ void Tree::preorderTraversal(Node* rootPtr)
     preorderTraversal(rootPtr->leftPtr);
     preorderTraversal(rootPtr->rightPtr);
 }
-
-void Tree::inorderTraversal(Node* rootPtr)
+// Inorder traversal
+void Tree::inorderTraversal(Node* rootPtr) const
 {
     // Traverse the tree
     
@@ -155,7 +153,8 @@ void Tree::inorderTraversal(Node* rootPtr)
     inorderTraversal(rootPtr->rightPtr);
 }
 
-void Tree::postorderTraversal(Node* rootPtr)
+// Pre-order traversal  
+void Tree::postorderTraversal(Node* rootPtr) const
 {
     // Traverse the tree
     
@@ -171,7 +170,7 @@ void Tree::postorderTraversal(Node* rootPtr)
 
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
+    
     cout<<"Enter Node Values"<<endl;
     Tree myTree;
     int index = 5;
