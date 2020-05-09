@@ -103,44 +103,55 @@ class LinkedList:
 def main():
 
     # Create Instance of LinkedList
-    print "Create LinkedList"
-    Node = LinkedList(10)
-    Ptr  = Node
-    count = 0
+    #print "Create LinkedList"
+    #Node = LinkedList(10)
+    Ptr  = None
+    Nodes = []
+    
 
     #print "Enter Nodes:"
     with open('NodeList.txt', 'r') as fileObj:
-        numbers = (fileObj.readlines()[0]).split()
-        print numbers
-        while count < 5 :
-            #Ptr.next = LinkedList(int(raw_input()))
-            Ptr.next = LinkedList(numbers[count])
-            Ptr = Ptr.next
-            count += 1
-        print "Linked List Created:"
+        lines = fileObj.readlines()
+        for line in lines:
+            line = line.strip()
+            if not line:
+                continue
+            numbers = line.split()
+            count = 0
+            Ptr = None
+            #print numbers
+            headPtr =  LinkedList(numbers.pop(0)) 
+            Ptr = headPtr
+            while count < len(numbers) :
+                Ptr.next = LinkedList(numbers[count])
+                Ptr = Ptr.next
+                count += 1
+            
+            print "Linked List Created:"
+            headPtr.display()
+            Nodes.append(headPtr)
 
-    print fileObj.close()
     # Display Linked List
-    Node.display()
+    Nodes[0].display()
 
     # Reverse LinkedList
     print "LinkedList Reversed"
-    Node = Node.reverse()
+    Nodes[0] = Nodes[0].reverse()
 
     # Display LinkedList
-    Node.display()
+    Nodes[0].display()
 
     # Sort LinkedList
     print "LinkedList Sorted"
-    Node = Node.sort()
+    Nodes[0] = Nodes[0].sort()
     # Display
-    Node.display()
+    Nodes[0].display()
 
     # Remove Duplicate Entry
     print "LinkedList Unique ( Removed Duplicate Entries)"
-    Node.removeDuplicate()
+    Nodes[0].removeDuplicate()
     # Display LinkedList
-    Node.display()
+    Nodes[0].display()
 
 
 
