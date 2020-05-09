@@ -34,9 +34,13 @@ public:
     }
     ~Queue()
     {
-        if ( front != NULL)
-        {
-            delete [] front;
+        if( front){
+          while(front){
+            Node* ptr = front;
+            front = front->next;
+            delete ptr;
+          }
+          rear = NULL;
         }
     }
     void enqueue( int item);
