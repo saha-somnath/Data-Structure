@@ -125,7 +125,7 @@ void RingBuffer::pop()
  Input Args: <int> value
  Return: None.
 */
-void RingBuffer::push_back(int value)
+/*void RingBuffer::push_back(int value)
 {
     if( _element_count == _size) {
         cout<<"WARNING: Buffer is full!\n";
@@ -144,7 +144,31 @@ void RingBuffer::push_back(int value)
         _buffer[_rear] = value;
         _element_count++; // Increase element count.
     }
+}*/
+
+void RingBuffer::push_back(int value)
+{
+    // Check buffer is full
+    if ( ((_rear == _size - 1) && _front == 0) || (_rear == _front -1)) {
+        cout<<"WARNING: Buffer is full!\n";
+    }else{
+        // Increment rear
+        if(_rear == -1){
+            _rear = _front = 0; // First element
+        }else if (empty()){
+            _front = _rear;
+        }else if( _rear == _size -1){
+            _rear = 0; // Reached last element, moving to first index.
+        }else{
+            _rear++;
+        }
+        //cout<<"Value:"<<value<<" Front:"<<_front<<" Rear:"<<_rear<<endl;
+        _buffer[_rear] = value;
+        _element_count++; // Increase element count.
+ 
+    }
 }
+
 
 int main(int argc, const char * argv[]) {
     
