@@ -1,45 +1,46 @@
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
 
+/*
+BST Construction: For each node in a list, search (O(logN) its position and place that.
+    Time complexity of constructing the BST is O(N * logN ).
+Traversal: vist node as
+preorder : root, left, right
+inorer   : left, root, rght
+postorder: left,right,root 
+
+In traversal, each node is visted only once, hence Time Complexity O(N) for N nodes.
+*/
+
 struct Node
 {
-    size_t info;
-    Node *leftPtr;
-    Node *rightPtr;
+    size_t data;
+    Node *left;
+    Node *right;
+    Node(int d=0):data(d),left(NULL),right(NULL){}
 };
 
-class Tree
+class BinarySearchTree
 {
-    
-    
+    Node* root;
 public:
-    Node *root;
-    Tree(){ root = NULL;}
-    Tree(int inItem)
-    { root= NULL;
-       // Populate tree
-    }
-    ~Tree()
+    BinarySearchTree():root(NULL){ }
+    ~BinarySearchTree()
     {
-        // free elements if root is not null
-        cout<<"Destructor"<<endl;
-        if ( root != NULL )
-        {
-           cout<<"Destroy Tree"<<endl;
-           destroy( root); 
-            
-        }
+        destroy( root); 
     }
-    // Create Tree
-    void buildTree( Node*  rootPtr, int item);
+    // Create BinarySearchTree
+    void buildBST( Node**  rootPtr, int item);
+    Node* getRoot(void) const { return root; }
     
-    // Tree traversal
-    friend void  treeTraversal(const Tree&);
-    void preorderTraversal( Node* rootPtr ) const;
-    void inorderTraversal(Node* rootPtr) const;
-    void postorderTraversal(Node* rootPtr ) const;
+    // BinarySearchTree traversal
+    void treeTraversal(void);
+    void preorder(Node* root) const;
+    void inorder(Node* root) const;
+    void postorder(Node* root) const;
     
     // Destroy tree
     void destroy(Node* root);
@@ -47,142 +48,103 @@ public:
 
 
 
-void Tree::buildTree(Node* rootPtr, int itemValue)
+void BinarySearchTree::buildBST(Node** rootPtr, int value)
 {
     
-        if ( root == NULL )
-        {
-            rootPtr = new Node;
-            rootPtr->info = itemValue;
-            rootPtr->leftPtr = NULL;
-            rootPtr->rightPtr = NULL;
-            
-            root = rootPtr;
-            cout<< "Node Added:"<<rootPtr->info<<endl;
-            return;
+        if ( *rootPtr == NULL ) {
+            *rootPtr = new Node(value);
+            if( root == NULL ){ 
+              root = *rootPtr;
+            }
+           
+        } else if ( value < (*rootPtr)->data ) {
+            buildBST(&(*rootPtr)->left, value);
+        } else {
+            buildBST(&(*rootPtr)->right, value);
         }
-    
-        if ( itemValue < rootPtr->info )
-        {
-            cout<<"left tree"<<endl;
-            if ( rootPtr->leftPtr !=NULL )
-            {
-                 buildTree(rootPtr->leftPtr, itemValue);
-            }
-            else
-            {
-                Node * newNodePtr =  new Node;
-                newNodePtr->info = itemValue;
-                newNodePtr->leftPtr = NULL;
-                newNodePtr->rightPtr = NULL;
-                rootPtr->leftPtr = newNodePtr;
-            }
-        }
-        else
-        {
-            cout<<"right tree"<<endl;
-            if (rootPtr->rightPtr !=NULL)
-            {
-                buildTree(rootPtr->rightPtr, itemValue);
-            }
-            else
-            {
-                rootPtr->rightPtr = new Node;
-                rootPtr->rightPtr->info = itemValue;
-                rootPtr->rightPtr->leftPtr = NULL;
-                rootPtr->rightPtr->rightPtr = NULL;
-            }
-        }
-    
 }
 
-// Tree Traversal
+// BinarySearchTree Traversal
 
-void treeTraversal(const Tree& myTree)
+void BinarySearchTree::treeTraversal()
 {
-    cout<<"preorder Traversal"<<endl;
-    myTree.preorderTraversal(myTree.root);
-    cout<<"inorder Traversal"<<endl;
-    myTree.inorderTraversal(myTree.root);
-    cout<<"postorder Traversal"<<endl;
-    myTree.postorderTraversal(myTree.root);
+    cout<<"preorder Traversal :";
+    preorder(root);
+    cout<<endl;
+    cout<<"inorder Traversal  :";
+    inorder(root);
+    cout<<endl;
+    cout<<"postorder Traversal:";
+    postorder(root);
+    cout<<endl;
     
     
 }
 
-// Destroy Tree
-void Tree::destroy(Node* root)
+// Destroy BinarySearchTree
+void BinarySearchTree::destroy(Node* root)
  {
     if ( root == NULL )
     {
         return;
     }
     // Delete left sub tree
-    destroy(root->leftPtr);
+    destroy(root->left);
     // Delete right subtree
-    destroy(root->rightPtr);
-    cout<<"Delete Node:"<<root->info<<endl;
+    destroy(root->right);
+    cout<<"Delete Node:"<<root->data<<endl;
     delete root;
     root = NULL;
     
 }
+
 // Pre-order traversal
-void Tree::preorderTraversal(Node* rootPtr) const 
+void BinarySearchTree::preorder(Node* rootPtr) const 
 {
-    // Traverse the tree
-    
-    if ( rootPtr == NULL )
-    {
+    if ( rootPtr == NULL ) {
         return;
     }
-    cout<<"Item:"<<rootPtr->info<<endl;
-    preorderTraversal(rootPtr->leftPtr);
-    preorderTraversal(rootPtr->rightPtr);
+    cout<<rootPtr->data<<" ";
+    preorder(rootPtr->left);
+    preorder(rootPtr->right);
 }
+
 // Inorder traversal
-void Tree::inorderTraversal(Node* rootPtr) const
+void BinarySearchTree::inorder(Node* rootPtr) const
 {
-    // Traverse the tree
-    
-    if ( rootPtr == NULL )
-    {
+    if ( rootPtr == NULL ) {
         return;
     }
-    inorderTraversal(rootPtr->leftPtr);
-    cout<<rootPtr->info<<endl;
-    inorderTraversal(rootPtr->rightPtr);
+    inorder(rootPtr->left);
+    cout<<rootPtr->data<<" ";
+    inorder(rootPtr->right);
 }
 
 // Pre-order traversal  
-void Tree::postorderTraversal(Node* rootPtr) const
+void BinarySearchTree::postorder(Node* rootPtr) const
 {
-    // Traverse the tree
-    
-    if ( rootPtr == NULL )
-    {
+    if ( rootPtr == NULL ) {
         return;
     }
-    
-    postorderTraversal(rootPtr->leftPtr);
-    postorderTraversal(rootPtr->rightPtr);
-    cout<<rootPtr->info<<endl;
+    postorder(rootPtr->left);
+    postorder(rootPtr->right);
+    cout<<rootPtr->data<<" ";
 }
 
 
 int main(int argc, const char * argv[]) {
     
-    cout<<"Enter Node Values"<<endl;
-    Tree myTree;
-    int index = 5;
-    while ( index > 0 )
-    {
-        int value;
-        cin >> value;
-        
-        myTree.buildTree(myTree.root, value);
-        index--;
+    vector<int> nodes({6,4,7,3,5,8});
+    BinarySearchTree*  bst = new BinarySearchTree();
+    for(auto value: nodes) {
+        cout<<value<<" ";
+        Node* ptr = bst->getRoot();
+        bst->buildBST(&ptr, value);
     }
-    treeTraversal(myTree);
+    cout<<endl;
+
+    bst->treeTraversal();
     
+    delete bst;
     return 0;
 }
