@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <queue>
 
 using namespace std;
 
@@ -41,6 +42,7 @@ public:
     void preorder(Node* root) const;
     void inorder(Node* root) const;
     void postorder(Node* root) const;
+    void level_order() const; // Iterative approach
     
     // Destroy tree
     void destroy(Node* root);
@@ -77,8 +79,9 @@ void BinarySearchTree::treeTraversal()
     cout<<"postorder Traversal:";
     postorder(root);
     cout<<endl;
-    
-    
+    cout<<"Level Order Traversal:"<<endl;
+    level_order();
+    cout<<endl; 
 }
 
 // Destroy BinarySearchTree
@@ -94,8 +97,7 @@ void BinarySearchTree::destroy(Node* root)
     destroy(root->right);
     cout<<"Delete Node:"<<root->data<<endl;
     delete root;
-    root = NULL;
-    
+    root = NULL;  
 }
 
 // Pre-order traversal
@@ -131,19 +133,49 @@ void BinarySearchTree::postorder(Node* rootPtr) const
     cout<<rootPtr->data<<" ";
 }
 
+// level order display
+void BinarySearchTree::level_order() const
+{
+    queue<Node*> Q;
+    Q.push(root);
+    Q.push(NULL);
+    // Level traversal
+    while(!Q.empty())
+    {
+        Node* node = Q.front();
+        Q.pop();
+        if(node){
+            // Each childen on the level
+            while(node){
+                cout<<node->data<<" ";
+                if(node->left){
+                    Q.push(node->left);
+                }
+                if(node->right){
+                    Q.push(node->right);
+                }
+                node = Q.front();
+                Q.pop();
+            }
+            cout<<endl;
+            Q.push(NULL);
+        }
+    }
+}
+
 /*
  Question: Given a Binary Search Tree (BST) and a range, count number of nodes that lie in the given range.
  
  Input:
-         10
-       /    \
-     5       50
-    /       /  \
-  1       40   100
- Range: [5, 45]
+         6
+       /  \
+     4     8
+    / \   / \
+  3    5 7  10
+ Range: [4, 7]
 
- Output:  3
- There are three nodes in range, 5, 10 and 40
+ Output:  4
+ There are three nodes in range, 4, 5, 6, 7
  */
 void bst_node_in_range(Node* root, vector<int>& range, vector<int>& nodes)
 {
@@ -166,7 +198,7 @@ void bst_node_in_range(Node* root, vector<int>& range, vector<int>& nodes)
 
 int main(int argc, const char * argv[]) {
     
-    vector<int> nodes({6,4,7,3,5,8});
+    vector<int> nodes({6,4,8,3,5,10,7});
     BinarySearchTree*  bst = new BinarySearchTree();
     for(auto value: nodes) {
         cout<<value<<" ";
@@ -177,9 +209,10 @@ int main(int argc, const char * argv[]) {
 
     bst->treeTraversal();
 
+    Node* root = bst->getRoot();
+    
     vector<int> range({4,7});
     vector<int> range_nodes;
-    Node* root = bst->getRoot();
     bst_node_in_range(root, range, range_nodes);
     cout<<"Elements in range: (4-7):";
     for(auto elm: range_nodes){
