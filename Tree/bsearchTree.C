@@ -164,7 +164,7 @@ void BinarySearchTree::level_order() const
 }
 
 /*
- Question: Given a Binary Search Tree (BST) and a range, count number of nodes that lie in the given range.
+ Question: Given a Binary Search Tree (BST) and a range, returns nodes that lie in the given range.
  
  Input:
          6
@@ -174,8 +174,7 @@ void BinarySearchTree::level_order() const
   3    5 7  10
  Range: [4, 7]
 
- Output:  4
- There are three nodes in range, 4, 5, 6, 7
+ Output:   4, 5, 6, 7
  */
 void bst_node_in_range(Node* root, vector<int>& range, vector<int>& nodes)
 {
