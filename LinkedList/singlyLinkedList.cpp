@@ -153,28 +153,33 @@ void LinkedList<T>::insert_order(T value)
 template<typename T>
 void LinkedList<T>::sort()
 {
-    // Bubble sort
-    int index = 0;
-    while(index < _size){
-        
-        Node<T>* prev = head;
-        Node<T>* curr = prev->next;
-        while( curr){
-            if( prev->data > curr->data){
-                // Excehange nodes
-                head = curr;
-                prev->next = curr->next;
-                curr->next = prev;
-                // Update prev and curr pointer.
-                curr = prev;
-                prev = head;
-            }else{
-                prev = curr;
-                curr = curr->next;
+    Node<T>* prev1 = NULL;
+    Node<T>* curr1 = head;
+    while(curr1){
+        Node<T>* curr2 = curr1->next;
+        Node<T>* prev2 = curr1;
+        while(curr2){
+            if(curr2->data < curr1->data){
+                // detach node
+                prev2->next = curr2->next;
+                // Add it to the respective position
+                if(curr1==head){
+                    head = curr2;
+                }else{
+                    prev1->next = curr2;
+                }
+                curr2->next = curr1;
+                // Mark that curr1
+                curr1 = curr2;
+                curr2 = prev2;
             }
+            prev2 = curr2;
+            curr2 = curr2->next;
         }
-        index++;
+        prev1 = curr1;
+        curr1 = curr1->next;
     }
+    
 }
 
 int main(int argc,const char* argv[])
@@ -201,14 +206,12 @@ int main(int argc,const char* argv[])
     cout<<"Reverse:";
     LL2->reverse();
     LL2->display();
-    LL2->sort();
-    LL2->display();
     delete LL2;
     
-    cout<<"Test3: type=<double>"<<endl;
+    cout<<"Test3: unordered list, type=<double>"<<endl;
     LinkedList<double>* LL3 = new LinkedList<double>();
     for(auto elm: {4.5,6.1,3.9,7.2,3.2}){
-        LL3->insert_order(elm);
+        LL3->push_back(elm);
     }
     LL3->display();
     cout<<"Sorted:";
@@ -219,6 +222,18 @@ int main(int argc,const char* argv[])
     LL3->display();
     
     delete LL3;
+    
+    cout<<"Test4: ordered list, type=<double>"<<endl;
+    LinkedList<double>* LL4 = new LinkedList<double>();
+    for(auto elm: {4.5,6.1,3.9,7.2,3.2}){
+        LL4->insert_order(elm);
+    }
+    LL4->display();
+    cout<<"Reverse:";
+    LL4->reverse();
+    LL4->display();
+    
+    delete LL4;
     
     return 0;
 }
