@@ -235,36 +235,27 @@ uint32_t BTree::height() const
  */
 void BTree::clear()
 {
-    Node* ptr = _root;
     queue<Node*> Q;
-    if(ptr){
-        Q.push(ptr);
-        Q.push(NULL);
-        
+    if(_root){
+        Q.push(_root);
         // Check each level
         while(!Q.empty()){
             Node* temp = Q.front();
-            if(temp) {
-                // Enque childern
-                while(temp){
-                    // left node
-                    if(temp->left){
-                        Q.push(temp->left);
-                    }
-                    // Right node
-                    if(temp->right){
-                        Q.push(temp->right);
-                    }
-                    Q.pop();
-                    delete temp;
-                    temp = Q.front();
-                }
-                Q.push(NULL); // Seperator each lavel
+            // left node
+            if(temp->left){
+               Q.push(temp->left);
+            }
+            // Right node
+            if(temp->right){
+               Q.push(temp->right);
             }
             Q.pop();
+            cout<<temp->_data<<"->";
+            delete temp;
         }
+        cout<<endl;
+        _root = NULL;
     }
-    _root = NULL;
 }
 
 void BTree::display() const
