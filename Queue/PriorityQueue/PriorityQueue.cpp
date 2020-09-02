@@ -31,6 +31,7 @@ struct Node
          - Time Complexity - O(logN)
     - Front Element:
          - Return front element : O(1)
+ - Construction of a priority queue with N node will cost O(N logN ).
 
 Compilation: g++ PriorityQueue.cpp -std=c++11 -o PriorityQueue
  
